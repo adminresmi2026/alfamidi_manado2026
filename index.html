@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPEN REGISTRATION BATCH 2 — MANADO 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Barlow+Condensed:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red-deep:#6a0202;
+    --red-bright:#e10600;
+    --red-glow:#ff2d2d;
+    --yellow:#ffd60a;
+    --yellow-2:#ffb700;
+    --cream:#fff8e7;
+    --ink:#0a0a0a;
+  }
+  *{-webkit-tap-highlight-color:transparent;}
+  html,body{font-family:'Barlow Condensed',sans-serif;}
+  body{
+    background:#1a0505;
+    color:var(--cream);
+    overflow-x:hidden;
+  }
+  .font-display{font-family:'Anton',sans-serif;letter-spacing:.02em;}
+  .font-archivo{font-family:'Archivo Black',sans-serif;}
+
+  /* radial merah menyala */
+  .poster-bg{
+    background:
+      radial-gradient(circle at 50% 38%, #ff4242 0%, #e10600 22%, #a50505 50%, #5a0202 80%, #2a0101 100%);
+  }
+
+  /* sinar berputar */
+  .sun-rays{
+    position:absolute; inset:-60%;
+    background:conic-gradient(
+      from 0deg,
+      transparent 0deg, rgba(255,255,255,.10) 4deg, transparent 8deg,
+      transparent 18deg, rgba(255,214,10,.07) 22deg, transparent 26deg,
+      transparent 38deg, rgba(255,255,255,.08) 42deg, transparent 46deg,
+      transparent 58deg, rgba(255,214,10,.05) 62deg, transparent 66deg,
+      transparent 80deg, rgba(255,255,255,.10) 84deg, transparent 88deg,
+      transparent 100deg, rgba(255,214,10,.07) 104deg, transparent 108deg,
+      transparent 122deg, rgba(255,255,255,.08) 126deg, transparent 130deg,
+      transparent 144deg, rgba(255,214,10,.05) 148deg, transparent 152deg,
+      transparent 166deg, rgba(255,255,255,.10) 170deg, transparent 174deg,
+      transparent 188deg, rgba(255,214,10,.07) 192deg, transparent 196deg,
+      transparent 210deg, rgba(255,255,255,.08) 214deg, transparent 218deg,
+      transparent 232deg, rgba(255,214,10,.05) 236deg, transparent 240deg,
+      transparent 254deg, rgba(255,255,255,.10) 258deg, transparent 262deg,
+      transparent 276deg, rgba(255,214,10,.07) 280deg, transparent 284deg,
+      transparent 298deg, rgba(255,255,255,.08) 302deg, transparent 306deg,
+      transparent 320deg, rgba(255,214,10,.05) 324deg, transparent 328deg,
+      transparent 342deg, rgba(255,255,255,.10) 346deg, transparent 350deg
+    );
+    animation:rotate 80s linear infinite;
+    opacity:.9;
+  }
+  @keyframes rotate{to{transform:rotate(360deg);}}
+
+  /* vignetted edges */
+  .vignette{
+    position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse at center, transparent 40%, rgba(40,0,0,.55) 100%);
+  }
+
+  /* grain */
+  .grain::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+    opacity:.14; mix-blend-mode:overlay;
+  }
+
+  .text-shadow-strong{
+    text-shadow:0 2px 0 #000, 0 6px 18px rgba(0,0,0,.55), 0 0 28px rgba(0,0,0,.3);
+  }
+  .stroke-yellow{
+    -webkit-text-stroke:3px var(--yellow);
+    color:transparent;
+    text-shadow:0 6px 18px rgba(0,0,0,.4);
+  }
+
+  /* pulse glow pada kartu harga */
+  @keyframes pulse-glow{
+    0%,100%{box-shadow:0 0 0 0 rgba(255,214,10,.6), 0 10px 30px rgba(0,0,0,.3);}
+    50%{box-shadow:0 0 50px 12px rgba(255,214,10,.35), 0 10px 30px rgba(0,0,0,.3);}
+  }
+  .pulse-glow{animation:pulse-glow 2.4s ease-in-out infinite;}
+
+  /* marquee */
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .marquee-track{animation:marquee 22s linear infinite;}
+
+  /* QR pulse */
+  @keyframes qr-pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.04);}
+  }
+  .qr-pulse{animation:qr-pulse 2.5s ease-in-out infinite;}
+
+  /* floating spark */
+  @keyframes float-up{
+    0%{transform:translateY(0) scale(0);opacity:0;}
+    10%{opacity:1;}
+    90%{opacity:.9;}
+    100%{transform:translateY(-110vh) scale(1.2);opacity:0;}
+  }
+  .spark{position:absolute;border-radius:50%;pointer-events:none;}
+
+  /* tanggal ribbon */
+  .ribbon{
+    background:linear-gradient(135deg,#1a0202 0%,#3a0303 100%);
+    border:1px solid rgba(255,214,10,.35);
+  }
+
+  /* tape corners */
+  .corner-tape{
+    position:absolute;width:36px;height:36px;
+    background:repeating-linear-gradient(45deg,rgba(255,214,10,.7),rgba(255,214,10,.7) 4px,rgba(0,0,0,.3) 4px,rgba(0,0,0,.3) 8px);
+  }
+
+  /* button shine */
+  .shine{position:relative;overflow:hidden;}
+  .shine::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.5) 50%,transparent 65%);
+    transform:translateX(-100%);transition:transform .8s;
+  }
+  .shine:hover::before{transform:translateX(100%);}
+
+  /* runner silhouette accent */
+  .silhouette{
+    position:absolute;
+    width:120px;height:120px;
+    opacity:.12;
+    color:#000;
+  }
+
+  /* underline marker */
+  .marker{
+    background:linear-gradient(transparent 65%, rgba(255,214,10,.45) 65%);
+    padding:0 4px;
+  }
+</style>
+</head>
+<body class="min-h-screen">
+
+<main class="relative min-h-screen w-full poster-bg grain overflow-hidden flex items-center justify-center py-8">
+  <!-- sinar -->
+  <div class="sun-rays"></div>
+  <div class="vignette"></div>
+
+  <!-- partikel -->
+  <div id="sparks" class="absolute inset-0 pointer-events-none z-[1]"></div>
+
+  <!-- siluet runner dekoratif -->
+  <svg class="silhouette" style="top:5%;right:-20px;transform:rotate(15deg);" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M13.5 5.5a2 2 0 11-4 0 2 2 0 014 0zm-3.5 3l-2 4 2 1 1 4h2l-1-5 2-1-1-3-3-2-1 2z"/>
+  </svg>
+  <svg class="silhouette" style="bottom:8%;left:-30px;transform:rotate(-10deg) scaleX(-1);" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M13.5 5.5a2 2 0 11-4 0 2 2 0 014 0zm-3.5 3l-2 4 2 1 1 4h2l-1-5 2-1-1-3-3-2-1 2z"/>
+  </svg>
+
+  <!-- konten poster -->
+  <div class="relative z-10 w-full max-w-md mx-auto px-5">
+
+    <!-- top ribbon -->
+    <div class="flex items-center justify-center gap-3 mb-3">
+      <div class="h-[2px] w-10 bg-yellow-300"></div>
+      <span class="font-archivo text-yellow-300 text-[10px] tracking-[0.35em] uppercase">Event Olahraga • Manado</span>
+      <div class="h-[2px] w-10 bg-yellow-300"></div>
+    </div>
+
+    <!-- OPEN REGISTRATION -->
+    <div class="text-center">
+      <p class="font-display text-2xl md:text-3xl tracking-[0.15em] text-shadow-strong" style="color:var(--cream)">
+        OPEN REGISTRATION
+      </p>
+
+      <!-- BATCH 2 hero -->
+      <div class="relative inline-block mt-1">
+        <h1 class="font-display leading-[0.82]">
+          <span class="block text-6xl md:text-7xl text-shadow-strong" style="color:var(--yellow)">BATCH</span>
+          <span class="block text-8xl md:text-9xl stroke-yellow -mt-1">2</span>
+        </h1>
+        <!-- spark accents -->
+        <svg class="absolute -left-6 top-2 w-8 h-8 text-yellow-300 animate-pulse" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5L12 17l-6.5 4.5L8 14l-6-4.5h7.5z"/></svg>
+        <svg class="absolute -right-5 bottom-4 w-6 h-6 text-yellow-300 animate-pulse" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5L12 17l-6.5 4.5L8 14l-6-4.5h7.5z"/></svg>
+      </div>
+    </div>
+
+    <!-- Tanggal -->
+    <div class="relative ribbon rounded-lg p-4 my-4 shadow-2xl">
+      <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-300 text-red-900 font-archivo text-[9px] px-3 py-1 tracking-[0.25em] whitespace-nowrap">
+        TANGGAL PELAKSANAAN
+      </div>
+      <div class="flex items-center justify-center gap-4 mt-1">
+        <div class="text-center">
+          <div class="font-archivo text-yellow-300 text-[11px] tracking-widest">HARI</div>
+          <div class="font-display text-2xl text-white leading-none mt-1">SABTU</div>
+        </div>
+        <div class="w-px h-12 bg-yellow-300/40"></div>
+        <div class="text-center">
+          <div class="font-archivo text-yellow-300 text-[11px] tracking-widest">TANGGAL</div>
+          <div class="font-display text-5xl text-white leading-none mt-0">08</div>
+        </div>
+        <div class="w-px h-12 bg-yellow-300/40"></div>
+        <div class="text-center">
+          <div class="font-archivo text-yellow-300 text-[11px] tracking-widest">BULAN</div>
+          <div class="font-display text-2xl text-white leading-none mt-1">AGUSTUS</div>
+          <div class="font-archivo text-yellow-300 text-sm leading-none">2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lokasi & Waktu -->
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <div class="bg-black/35 backdrop-blur-sm border border-yellow-300/30 rounded-lg p-3 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-12 h-12 bg-yellow-300/10 rounded-bl-full"></div>
+        <div class="flex items-center gap-2 mb-1 relative">
+          <svg class="w-4 h-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 00-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          <span class="text-[10px] font-archivo tracking-widest text-yellow-300">LOKASI</span>
+        </div>
+        <p class="text-white text-sm font-bold leading-tight relative">LAP. BASKET KAWASAN MEGAMAS</p>
+        <p class="font-archivo text-yellow-300 text-base mt-1 relative tracking-wider">MANADO</p>
+      </div>
+      <div class="bg-black/35 backdrop-blur-sm border border-yellow-300/30 rounded-lg p-3 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-12 h-12 bg-yellow-300/10 rounded-bl-full"></div>
+        <div class="flex items-center gap-2 mb-1 relative">
+          <svg class="w-4 h-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+          <span class="text-[10px] font-archivo tracking-widest text-yellow-300">WAKTU</span>
+        </div>
+        <p class="text-white text-sm font-bold leading-tight relative">MULAI PUKUL</p>
+        <p class="font-archivo text-yellow-300 text-2xl mt-1 relative leading-none">10:00 <span class="text-xs">WITA</span></p>
+      </div>
+    </div>
+
+    <!-- Harga -->
+    <div class="relative bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-xl p-4 mb-4 pulse-glow overflow-hidden shine">
+      <div class="absolute -right-6 -top-6 w-24 h-24 rounded-full border-4 border-red-900/15"></div>
+      <div class="absolute -left-3 -bottom-3 w-14 h-14 rounded-full border-4 border-red-900/15"></div>
+      <div class="relative flex items-center justify-between">
+        <div>
+          <div class="text-red-900 font-archivo text-[10px] tracking-[0.25em]">HARGA TIKET</div>
+          <div class="font-display text-4xl text-red-900 leading-none mt-0">Rp.75.000<span class="text-2xl">*</span></div>
+          <div class="text-red-900/80 text-[10px] font-bold tracking-wider mt-1">/ PESERTA</div>
+        </div>
+        <div class="text-right">
+          <svg class="w-10 h-10 text-red-900 ml-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" clip-rule="evenodd"/></svg>
+          <div class="text-red-900 font-archivo text-[9px] tracking-widest mt-1">EARLY BIRD</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fasilitas -->
+    <div class="bg-black/30 backdrop-blur-sm border border-yellow-300/25 rounded-lg p-3 mb-4">
+      <div class="text-yellow-300 font-archivo text-[10px] tracking-[0.25em] mb-2 text-center">FASILITAS PESERTA</div>
+      <div class="grid grid-cols-3 gap-2">
+        <div class="flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-full bg-yellow-300/15 border border-yellow-300/60 flex items-center justify-center mb-1">
+            <svg class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24"><path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A2.01 2.01 0 0017.56 7h-.12a2 2 0 00-1.9 1.37l-.86 2.58L17 14v8h3zM10 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm6 18v-6h.5L14 9.5c-.28-.83-1.05-1.5-1.94-1.5h-.12c-.89 0-1.66.67-1.94 1.5L7.5 16H8v6h2v-5h4v5h2z"/></svg>
+          </div>
+          <span class="text-white text-[11px] font-bold tracking-wider">JERSEY</span>
+        </div>
+        <div class="flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-full bg-yellow-300/15 border border-yellow-300/60 flex items-center justify-center mb-1">
+            <svg class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+          </div>
+          <span class="text-white text-[11px] font-bold tracking-wider">GOODIEBAG</span>
+        </div>
+        <div class="flex flex-col items-center text-center">
+          <div class="w-11 h-11 rounded-full bg-yellow-300/15 border border-yellow-300/60 flex items-center justify-center mb-1">
+            <svg class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 24 24"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          </div>
+          <span class="text-white text-[11px] font-bold tracking-wider">DOORPRIZE</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pembelian -->
+    <div class="text-center mb-3">
+      <p class="text-white/80 text-[11px] tracking-[0.25em]">PEMBELIAN TIKET HANYA DI APLIKASI</p>
+      <p class="font-display text-3xl text-yellow-300 tracking-[0.1em] mt-0">MIDIKRIING</p>
+    </div>
+
+    <!-- QR Section -->
+    <div class="relative bg-white rounded-2xl p-4 flex items-center gap-4 shadow-2xl">
+      <!-- sudut aksen -->
+      <div class="absolute -top-1 -left-1 w-4 h-4 border-t-4 border-l-4 border-yellow-400 rounded-tl-lg"></div>
+      <div class="absolute -top-1 -right-1 w-4 h-4 border-t-4 border-r-4 border-yellow-400 rounded-tr-lg"></div>
+      <div class="absolute -bottom-1 -left-1 w-4 h-4 border-b-4 border-l-4 border-yellow-400 rounded-bl-lg"></div>
+      <div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-4 border-r-4 border-yellow-400 rounded-br-lg"></div>
+
+      <div class="qr-pulse shrink-0 p-1 border-2 border-red-900/20 rounded-lg">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&color=6a0202&bgcolor=ffffff&margin=0&data=https://midikriing.app/daftar-batch2-manado" alt="QR Pendaftaran" class="w-24 h-24 block" />
+      </div>
+      <div class="flex-1">
+        <div class="font-archivo text-red-700 text-[10px] tracking-[0.25em]">SCAN &</div>
+        <div class="font-display text-3xl text-red-900 leading-none">DAFTAR</div>
+        <div class="font-display text-3xl text-red-900 leading-none">DISINI</div>
+        <div class="flex items-center gap-1 mt-2">
+          <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          <span class="text-red-700 text-[10px] font-bold tracking-wider">SLOT TERSEDIA</span>
+        </div>
+      </div>
+      <svg class="w-7 h-7 text-red-900 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+    </div>
+
+    <!-- Marquee footer -->
+    <div class="overflow-hidden mt-5 -mx-5 border-y border-yellow-300/30 py-2 bg-black/20">
+      <div class="flex marquee-track whitespace-nowrap">
+        <div class="flex items-center gap-3 px-2 shrink-0">
+          <span class="font-display text-yellow-300 text-lg tracking-wider">OPEN REGISTRATION</span>
+          <span class="text-yellow-300">★</span>
+          <span class="font-display text-white text-lg">BATCH 2</span>
+          <span class="text-yellow-300">★</span>
+          <span class="font-display text-yellow-300 text-lg">8 AGUSTUS 2026</span>
+          <span class="text-yellow-300">★</span>
+          <span class="font-display text-white text-lg">MANADO</span>
+          <span class="text-yellow-300">★</span>
+          <span class="font-display text-yellow-300 text-lg">RP.75.000</span>
+          <span class="text-yellow-300">★</span>
+        </div>
+        <div class="flex items-center gap-3 px-2 shrink-0">
+          <span class="font-display text-yellow-300 text-lg tracking-wider">OPEN REGISTRATION</span>
+          <span class="text-yellow-300">★</span>
+          <span class="font-display text-white text-lg">BATCH 2</span>
+          <span class="text-yellow-300">★</span>
+          <span class="font-display text-yellow-300 text-lg">8 AGUSTUS 2026</span>
+          <span class="text-yellow-300">★</span>
+          <span class="font-display text-white text-lg">MANADO</span>
+          <span class="text-yellow-300">★</span>
+          <span class="font-display text-yellow-300 text-lg">RP.75.000</span>
+          <span class="text-yellow-300">★</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- catatan -->
+    <p class="text-center text-white/65 text-[10px] mt-3 leading-relaxed">
+      *Harga sudah termasuk jersey, goodiebag & doorprize.<br/>
+      Syarat &amp; ketentuan berlaku. Slot terbatas.
+    </p>
+  </div>
+</main>
+
+<script>
+  // Generator partikel spark berwarna kuning & putih yang naik ke atas
+  const sparks = document.getElementById('sparks');
+  const colors = ['#ffd60a', '#ffffff', '#ff6b6b', '#ffb700'];
+
+  function createSpark(){
+    const s = document.createElement('div');
+    s.className = 'spark';
+    const size = Math.random() * 7 + 2;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.background = colors[Math.floor(Math.random() * colors.length)];
+    s.style.left = Math.random() * 100 + '%';
+    s.style.bottom = (Math.random() * 20) + 'px';
+    s.style.opacity = '0.7';
+    s.style.boxShadow = '0 0 8px currentColor';
+    s.style.color = s.style.background;
+    const dur = Math.random() * 7 + 6;
+    s.style.animation = `float-up ${dur}s linear forwards`;
+    sparks.appendChild(s);
+    setTimeout(() => s.remove(), dur * 1000 + 200);
+  }
+  setInterval(createSpark, 380);
+  for(let i=0; i<10; i++) setTimeout(createSpark, i * 350);
+
+  // Tambahkan efek tilt 3D halus pada kartu QR saat hover (desktop)
+  const qrCard = document.querySelector('.relative.bg-white.rounded-2xl');
+  if(qrCard){
+    qrCard.addEventListener('mousemove', (e) => {
+      const r = qrCard.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      qrCard.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg)`;
+    });
+    qrCard.addEventListener('mouseleave', () => {
+      qrCard.style.transform = 'perspective(800px) rotateY(0) rotateX(0)';
+    });
+    qrCard.style.transition = 'transform .3s ease';
+  }
+</script>
+</body>
+</html>
